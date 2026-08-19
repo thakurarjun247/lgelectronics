@@ -1,0 +1,108 @@
+LG NOIDA AI TRAINING — TODO
+============================
+
+DECIDED TECH STACK (final — see TECH_STACK.txt for full table)
+- Concepts: Google AI Studio (free forever)
+- RAG: NotebookLM (free forever)
+- AI Agent: n8n Cloud (TESTING — Copilot Studio blocked; see Module 3 log)
+- Agentic/Orchestration: n8n Cloud, multi-node (TESTING)
+- Dashboard (optional): Looker Studio on Google Sheet (free forever)
+- Constraints: reliability-first, effectively free (30-day trial ok), no-code
+
+STRUCTURE
+- One folder per module (Module2_RAG, Module3_Agent, ...)
+- Each module gets: exact self-serve steps + diagrams + sample docs/examples
+- At the END: one consolidated document + refreshed slides (existing slides are outdated)
+
+=====================================================
+MODULE 2 — RAG (50 min, incl. 10 min Q&A)
+=====================================================
+Cover:
+- What RAG is and why it matters
+- Live demo, before vs after RAG — Example A: machine error code lookup
+- Data, chunking, retrieval — explained on the demo (time permitting), with a Block Diagram
+
+STATUS
+[DONE] Sample docs RE-ALIGNED to the predictive-maintenance spine:
+       - AgentA_FailurePrediction/IM500_MachineHealth_FailurePrediction_Manual.pdf
+       - AgentA_FailurePrediction/IM500_Predictive_Addendum.pdf (Encoder EN-77, before/after)
+       - AgentB_SpareParts/IM500_SpareParts_Inventory_Catalog.pdf
+       (old injection-molding error-code docs moved to Module2_RAG/Archive_injectionmolding_errorcodes/)
+[DONE] Block diagrams created + re-aligned to predictive maintenance (Module2_RAG/Diagrams):
+       - rag_pipeline (prepare docs -> chunk -> embed/index -> retrieve -> Gemini -> grounded answer)
+       - rag_beforeafter (before vs after RAG; servo-error / EN-77 example)
+[DONE] Before/after demo proven live in NotebookLM (with earlier docs):
+       - Ask about an item NOT in sources -> "not in sources" (honest, no hallucination)
+       - Upload addendum, re-ask -> full grounded, cited answer synthesized across sources
+
+RESOLVED GAP (2026-08-19)
+- Module 2 sample docs WERE injection-molding error codes; spine is predictive
+  maintenance (failure prediction + spare parts). NOW FIXED: docs re-aligned,
+  old docs archived, diagrams regenerated. (Kept here for history.)
+
+TO DO (next session)
+[ ] Re-verify before/after demo in NotebookLM using the NEW predictive-maintenance
+    docs (upload Agent A manual + Agent B catalog; ask an EN-77 question that needs
+    the addendum; confirm "not found" before, full cited answer after)
+[ ] Write the RAG doc (Word): what RAG is + why it matters, exact NotebookLM steps
+    (from zero account), before/after demo script, chunking/retrieval explainer,
+    embed both diagrams
+[ ] Add suggested demo questions list (sensor thresholds, spare-part stock, EN-77 before/after)
+
+DEMO NOTES
+- Login: personal Gmail or arjunthakur.dev (own domain) — avoid official LG email (corp policy risk)
+- NotebookLM won't chat with zero sources; "before RAG" = plain Gemini (gemini.google.com)
+
+=====================================================
+MODULE 3 — AI AGENT  (tool: TESTING n8n — see log)
+=====================================================
+Goal: agent reads an error/alarm -> looks it up -> decides action (manufacturing).
+
+TOOL TRIAL LOG (why we landed on n8n)
+- Copilot Studio: BLOCKED — needs org M365 license; arjun@arjunthakur.dev has none;
+  free Dev Program now gated behind Visual Studio/partner status.
+- n8n Cloud: CURRENT PICK (testing). Signup asked for office email; used own domain, got in.
+
+STATUS — where we stopped (RESUME HERE)
+[DONE] n8n Cloud account created. Live instance: https://arjunthakurdev.app.n8n.cloud/
+[NEXT] Build the Module 3 workflow:
+       1. Create Workflow (top-right)
+       2. Add Manual Trigger ("When clicking Test workflow")
+       3. + -> AI Agent node
+       4. Chat Model -> Google Gemini Chat Model -> add credential (paste free Gemini
+          API key from aistudio.google.com) -> model gemini-1.5-flash
+       5. Source for Prompt -> Define below -> "Error code: E-303"
+       6. System Message -> paste factory prompt + error-code REFERENCE block
+          (reference block saved in Module3_Agent notes / in this chat)
+       7. Test workflow -> open AI Agent node -> read Output
+[THEN] Add a real TOOL (e.g., Google Sheet node to LOG the fault) = turns Q&A into a
+       true agent (the Module 3 "decides + acts" point).
+
+NEED TOMORROW
+- Free Gemini API key ready (aistudio.google.com -> Get API key)
+- The system prompt + reference block (in chat history; also to be saved to Module3_Agent)
+
+=====================================================
+MODULE 4 — AGENTIC AI & ORCHESTRATION  (tool: TESTING n8n)
+=====================================================
+Goal: multiple agents/steps working together; supervisor/sequential/parallel; factory.
+PLAN: extend the n8n workflow into multiple nodes/agents (e.g., diagnose agent ->
+      action agent -> notify agent). If live tool is flaky, fall back to a diagram +
+      concept walkthrough (and/or a pre-recorded flow).
+STATUS: not started (depends on Module 3 working in n8n first).
+
+=====================================================
+OTHER MODULES (not started)
+=====================================================
+[ ] Module 1 — Concepts (AI vs GenAI vs Agent vs Agentic AI; factory examples)
+[ ] Module 5 — Dashboard (optional; Looker Studio; cut first if short on time)
+[ ] FINAL — consolidated document + refreshed slide deck
+
+=====================================================
+RESUME TOMORROW — QUICK START
+=====================================================
+1. Finish Module 2 RAG Word doc (steps + script + diagrams) — content all ready.
+2. Module 3: open https://arjunthakurdev.app.n8n.cloud/ , build the AI Agent workflow
+   (steps above), get a Gemini API key first, test with E-303 / E-620.
+3. Then Module 4 orchestration in the same n8n workflow.
+NOTE: n8n = still TESTING, not final.

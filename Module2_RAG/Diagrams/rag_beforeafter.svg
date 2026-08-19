@@ -1,0 +1,33 @@
+<svg viewBox="0 0 1100 520" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect width="1100" height="520" fill="#ffffff"/>
+  <text x="550" y="42" font-size="26" font-weight="700" text-anchor="middle" fill="#1f2d3d">Before RAG vs After RAG</text>
+  <text x="550" y="70" font-size="14.5" text-anchor="middle" fill="#6b7280">Same question: "Servo position error is rising — which spare part, is it in stock, what is the risk?"</text>
+  <rect x="40" y="100" width="480" height="385" rx="14" fill="#fdeeee" stroke="#e0a3a3"/>
+  <text x="280" y="135" font-size="20" font-weight="700" text-anchor="middle" fill="#a12b2b">BEFORE RAG</text>
+  <text x="280" y="160" font-size="13" text-anchor="middle" fill="#6b7280">Plain chatbot, no company documents</text>
+  <rect x="70" y="185" width="420" height="70" rx="8" fill="#ffffff" stroke="#e0a3a3"/>
+  <text x="90" y="212" font-size="13" fill="#1f2d3d">Operator asks about the servo error + part</text>
+  <text x="90" y="234" font-size="12" fill="#6b7280">Model has never seen the IM-500 data</text>
+  <rect x="70" y="275" width="420" height="185" rx="8" fill="#ffffff" stroke="#e0a3a3"/>
+  <text x="90" y="302" font-size="13" font-weight="700" fill="#a12b2b">Result</text>
+  <text x="90" y="328" font-size="12.5" fill="#1f2d3d">• Generic or guessed answer</text>
+  <text x="90" y="352" font-size="12.5" fill="#1f2d3d">• Does not know the part number or stock</text>
+  <text x="90" y="376" font-size="12.5" fill="#1f2d3d">• May invent a lead time (hallucination)</text>
+  <text x="90" y="400" font-size="12.5" fill="#1f2d3d">• No source, no citation</text>
+  <text x="90" y="424" font-size="12.5" fill="#1f2d3d">• Not safe to plan maintenance on</text>
+  <text x="90" y="448" font-size="12.5" fill="#6b7280">Risk: wrong part ordered, machine goes down</text>
+  <rect x="580" y="100" width="480" height="385" rx="14" fill="#edf7ed" stroke="#8fc98f"/>
+  <text x="820" y="135" font-size="20" font-weight="700" text-anchor="middle" fill="#1e6b1e">AFTER RAG</text>
+  <text x="820" y="160" font-size="13" text-anchor="middle" fill="#6b7280">Grounded in your uploaded documents</text>
+  <rect x="610" y="185" width="420" height="70" rx="8" fill="#ffffff" stroke="#8fc98f"/>
+  <text x="630" y="212" font-size="13" fill="#1f2d3d">Same question about the servo error</text>
+  <text x="630" y="234" font-size="12" fill="#6b7280">Health Manual + Spare Parts + Addendum</text>
+  <rect x="610" y="275" width="420" height="185" rx="8" fill="#ffffff" stroke="#8fc98f"/>
+  <text x="630" y="302" font-size="13" font-weight="700" fill="#1e6b1e">Result</text>
+  <text x="630" y="328" font-size="12.5" fill="#1f2d3d">• Cause: servo encoder degrading (~6 days)</text>
+  <text x="630" y="352" font-size="12.5" fill="#1f2d3d">• Exact part: Encoder EN-77</text>
+  <text x="630" y="376" font-size="12.5" fill="#1f2d3d">• Stock: 0 in store, 21-day lead time</text>
+  <text x="630" y="400" font-size="12.5" fill="#1f2d3d">• Flags URGENT (lead time &gt; failure date)</text>
+  <text x="630" y="424" font-size="12.5" fill="#1f2d3d">• Cited to the exact source</text>
+  <text x="630" y="448" font-size="12.5" fill="#6b7280">Safe, specific, actionable</text>
+</svg>

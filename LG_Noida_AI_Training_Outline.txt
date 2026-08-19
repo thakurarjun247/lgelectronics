@@ -1,0 +1,58 @@
+LG ELECTRONICS NOIDA - AI TRAINING -Revised Plan
+Duration: 4 hours - to be increased to 6 hours | Instructor-led | Live demos (no per-person hands-on)
+All demo code shared with attendees afterward.
+
+TOOLS & TECHNOLOGIES (indicative)
+- IDE: PyCharm (or a similar editor)
+- Language: Python
+- AI model: Google Gemini API (free tier)
+- Supporting libraries as needed during the demos.
+
+------------------------------------------------------------
+0. OPENING (5 min)
+- What we cover in 4 hours and how the session runs.
+
+------------------------------------------------------------
+1. CONCEPTS (30 min, incl. 5 min Q&A)
+- AI vs Generative AI vs AI Agent vs Agentic AI.
+- Plain-language definitions, one example each.
+- Where each fits in a factory context.
+
+------------------------------------------------------------
+2. RAG - RETRIEVAL AUGMENTED GENERATION (50 min, incl. 10 min Q&A)
+- What RAG is and why it matters.
+- Live demo, before vs after RAG:
+    Example A: machine error code lookup.
+- Data, chunking, retrieval - explained on the demo (time permitting).Explain with a Block Diagram
+
+------------------------------------------------------------
+   BREAK (10 min)
+
+------------------------------------------------------------
+3. AI AGENT - LIVE DEMO (40 min, incl. 7 min Q&A) Bedrock (use a manufacturing e.g. )
+- What makes an agent (LLM + tools + decisions).
+- Live demo: agent reads an error/alarm, looks it up, decides an action.
+- Walk through the code.
+
+------------------------------------------------------------
+4. AGENTIC AI & AGENT ORCHESTRATION (50 min, incl. 10 min Q&A)
+- How multiple agents work together.
+- Sharing data, handoffs, who triggers whom.
+- Orchestration patterns: supervisor, sequential, parallel.
+- Mapped to a real multi-agent factory setup.
+Contact Gagan Sir, for examples.
+------------------------------------------------------------
+5. DASHBOARD (OPTIONAL - 30 min, incl. 5 min Q&A) 
+- Athena or any low/no code.
+- Cut first if earlier sections run long.
+
+------------------------------------------------------------
+6. WRAP-UP (5 min)
+- Recap. Code handout. Next steps.
+
+------------------------------------------------------------
+NOTE ON EXAMPLES & TOOLS
+The demo examples, tools, and libraries listed here are indicative and
+may be adjusted while the training material is finalized. The aim is to
+keep every example clear and easy to follow, so the final choices will
+be the ones that best serve the group on the day.

@@ -1,0 +1,27 @@
+LG NOIDA AI TRAINING — FINAL TECH STACK
+========================================
+Principle: Reliability-first, effectively free (30-day trial OK), no-code.
+Ignore all other tools/languages/frameworks from the old outline.
+
+Module                          Tool                                Free           Why
+-----------------------------------------------------------------------------------------------------------------
+1. Concepts                     Google AI Studio                    Free forever   Rock-solid, instant, no setup
+2. RAG                          NotebookLM                          Free forever   Best-in-class no-code RAG, Google-stable
+3. AI Agent                     Dify (TESTING)                      Free tier      Currently trying out — see note
+4. Agentic/Orchestration        Dify (TESTING, multi-agent workflow)    Free tier      Currently trying out — see note
+5. Dashboard                    Looker Studio                       Free forever   No-code, connects to Sheets
+
+NOTES
+- Modules 3 & 4: NOT FINAL. We are TESTING Dify because Microsoft Copilot Studio
+  did not work out (org account arjun@arjunthakur.dev has no M365 license; free
+  Dev Program is now gated behind Visual Studio/partner status). To be confirmed
+  after we try Dify.
+- Copilot Studio remains the fallback / "enterprise option" if LG wants Microsoft.
+- Dify: any email to sign up, free tier (has message/knowledge limits), needs its
+  own model API key — a free Gemini API key from Google AI Studio works.
+- All tools are browser-based, no-code.
+
+MODULE 3 & 4 — TOOL TRIAL LOG (in progress)
+- Copilot Studio: BLOCKED — needs org M365 license; arjun@arjunthakur.dev has none.
+- n8n Cloud: TESTING (current pick). Note: Google login worked but then it asked for an
+  OFFICE/work email (personal Gmail may be restricted on signup).

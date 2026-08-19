@@ -1,0 +1,88 @@
+LG NOIDA AI TRAINING — WORKSHOP EXAMPLES
+=========================================
+Core idea: ONE thread, built progressively across modules.
+We do NOT use separate throwaway examples per concept. We take the SAME two
+use-cases and grow them: RAG -> single agent -> group of agents (orchestration).
+
+USE-CASE POOL (two domains the agents come from):
+  Example 1 = Predictive Maintenance (factory floor)
+  Example 2 = Production Planning (office area)
+
+-------------------------------------------------
+HOW IT IS BUILT ACROSS THE MODULES (4-hour flow)
+-------------------------------------------------
+Module 2 (RAG):
+  - Build the RAG part for TWO agents.
+  - Instructor builds ONE RAG live; students build the OTHER themselves.
+
+Module 3 (Single AI Agent):
+  - Turn each RAG into a single working agent = TWO single agents.
+  - Instructor builds ONE agent live; students build the OTHER themselves.
+
+Module 4 (Agentic AI / Orchestration):
+  - The SAME two agents from Module 3 now join ONE group and work together.
+  - Demonstrate orchestration of those two agents (handoff / who triggers whom).
+  - IF TIME PERMITS: build one more example from scratch (fresh RAG + agents
+    for a full group).
+
+=> Net result: RAG -> two single agents -> ONE combined group (orchestration).
+=> Deliberately ONE combined group, NOT two separate groups. This keeps the
+   4-hour training tight and avoids two unrelated groups. The two agents are
+   related via a natural bridge (see below), so putting them in one group makes
+   sense: e.g., predicted machine downtime affects production capacity/plan.
+
+=================================================
+EXAMPLE 1 — PREDICTIVE MAINTENANCE (factory floor)
+3-4 agents
+=================================================
+Agent 1 — Failure Prediction Agent
+   - Predicts machine failures using machine + sensor data.
+Agent 2 — Spare Parts Agent
+   - Checks whether the required spare parts are available in inventory.
+Agent 3 — Maintenance Agent
+   - Raises a maintenance request BEFORE the due date.
+
+Note: this domain is the FULL target group (3 agents). For the 4-hour flow we take
+ONE agent from here as a single agent in Module 3, then combine it in Module 4.
+The full 3-agent group is the "if time permits" / take-home version.
+
+=================================================
+EXAMPLE 2 — PRODUCTION PLANNING (office area)
+4 agents
+=================================================
+Agent 1 — Planning Agent
+   - Plans and highlights low-inventory, low-supply, and high-demand items.
+Agent 2 — Production Capacity Check Agent
+   - Checks if the item is in the production plan / whether capacity exists.
+Agent 3 — Coordinator Agent
+   - Creates the production plan; finds the required units to be manufactured.
+Agent 4 — Master Agent
+   - Sends the final plan to the PLANT HEAD.
+
+Note: this domain is the FULL target group (4 agents). For the 4-hour flow we take
+ONE agent from here as a single agent in Module 3, then combine it in Module 4.
+The full 4-agent group is the "if time permits" / take-home version.
+
+-------------------------------------------------
+THE 4-HOUR SPINE (what actually gets built live)  << DECIDED >>
+-------------------------------------------------
+Both live agents come from EXAMPLE 1 (Predictive Maintenance):
+   AGENT A = Failure Prediction Agent  (predicts the failure)
+   AGENT B = Spare Parts Agent         (checks spare parts + inventory)
+
+- Module 2 (RAG): build the RAG for both agents.
+     Instructor builds one RAG live; students build the other themselves.
+- Module 3 (Single agent): each RAG becomes a single agent (Agent A, Agent B).
+     Instructor builds one; students build the other.
+- Module 4 (Orchestration): Agent A + Agent B join ONE group and work together.
+     Natural flow: predict failure (A) -> check spare parts/inventory (B).
+     (Full 3-agent maintenance group, incl. Maintenance Agent raising the request,
+      is the "if time permits" / take-home extension.)
+- If time permits: build one more example from scratch (e.g., Production Planning).
+
+-------------------------------------------------
+NOTES
+-------------------------------------------------
+- Tooling for agents/orchestration: currently TESTING n8n Cloud (see TECH_STACK.txt).
+- RAG tooling: NotebookLM (Module 2, already proven).
+- Instructor-led, live demo; students build the second example themselves at each stage.
