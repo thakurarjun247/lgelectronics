@@ -6,6 +6,16 @@
 
 ---
 
+## ⭐ KEY URL (most important)
+
+**n8n workflows home:** https://arjunthakurdev.app.n8n.cloud/home/workflows
+
+All workflows live here (Agent A, Agent B, Agent C, and the Module 4 orchestration).
+Open this page to run any demo or to create a new workflow. This is the single most
+important link for the live session.
+
+---
+
 ## 1. What this project is
 
 We are preparing a **4-hour instructor-led AI training** for LG Electronics, Noida. It is a live-demo session (no per-person hands-on; demo code shared afterwards). Audience is from a **manufacturing background, non-technical**. The instructor is Arjun.

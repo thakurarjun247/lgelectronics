@@ -1,6 +1,10 @@
 LG NOIDA AI TRAINING — TODO
 ============================
 
+*** KEY URL (most important) ***
+n8n workflows home: https://arjunthakurdev.app.n8n.cloud/home/workflows
+All workflows live here; open it to run demos or create new workflows.
+
 DECIDED TECH STACK (final — see TECH_STACK.txt for full table)
 - Concepts: Google AI Studio (free forever)
 - RAG: NotebookLM (free forever)
