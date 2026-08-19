@@ -1,0 +1,75 @@
+LG NOIDA AI TRAINING — MODULE 5: LOG + DASHBOARD (STEPS)
+n8n instance: https://arjunthakurdev.app.n8n.cloud/
+Saved: 2026-08-19
+
+GOAL
+Agent C's maintenance decision is written to a Google Sheet (the "act" step),
+and a Looker Studio dashboard reads that Sheet. Wow factor: a row appears live,
+the dashboard updates.
+
+STACK (all free, all no-code, all feasible in n8n)
+- Log: Google Sheets  (n8n has a native Google Sheets node; Excel/M365 is OUT — no license)
+- Dashboard: Looker Studio (native Google Sheets connector, auto-refresh)
+- Same Google account used for Gemini / NotebookLM.
+
+FINAL FLOW
+Chat -> Agent A -> Agent B -> Agent C -> Google Sheets (Append Row) -> [Looker Studio reads sheet]
+
+=====================================================================
+STEP 1 — CREATE THE GOOGLE SHEET  [DONE]
+=====================================================================
+1. sheets.google.com -> Blank spreadsheet -> name it: IM500_Maintenance_Log
+2. Row 1 headers (A1..H1), one per cell:
+   Timestamp | Machine | Failing Component | Part No | In Stock | Failure In (days) | Schedule By (days) | Priority
+3. Keep the tab name Sheet1.
+
+=====================================================================
+STEP 2 — CONNECT GOOGLE ACCOUNT TO n8n  [DONE]
+=====================================================================
+1. In the Module 4 orchestration workflow -> add node -> search "Google Sheets".
+2. In the node: Credential -> "Sign in with Google" -> complete the Google popup ->
+   allow access (Sheets + Drive scopes). Credential saved as "Google Sheets account".
+   - Gotcha: if the popup is blocked, allow popups for the n8n domain and retry.
+   - This authorizes n8n to read/write the signed-in Google account's Sheets.
+3. Node config so far:
+   - Resource = Sheet Within Document
+   - Operation = Append Row   (use Append Row, NOT "Append or Update Row" — Append
+     Row does not need a "column to match on")
+   - Document = From list -> IM500_Maintenance_Log
+   - Sheet = From list -> Sheet1
+   - Mapping Column Mode = Map Each Column Manually
+
+=====================================================================
+STEP 3 — MAKE AGENT C EMIT STRUCTURED FIELDS  [NEXT]
+=====================================================================
+Why: the Sheet needs clean columns (component, part, priority, etc.). Agent C
+currently outputs prose. We attach a Structured Output Parser to Agent C so its
+output becomes discrete fields the Sheet can map to.
+(Exact steps to be added once configured.)
+
+Planned fields: machine, component, part, in_stock, failure_days, schedule_by_days, priority, summary
+
+=====================================================================
+STEP 4 — MAP THE SHEET COLUMNS  [PENDING]
+=====================================================================
+In the Google Sheets node, Values to Send:
+   Timestamp          = {{ $now }}
+   Machine            = {{ $json.output.machine }}
+   Failing Component  = {{ $json.output.component }}
+   Part No            = {{ $json.output.part }}
+   In Stock           = {{ $json.output.in_stock }}
+   Failure In (days)  = {{ $json.output.failure_days }}
+   Schedule By (days) = {{ $json.output.schedule_by_days }}
+   Priority           = {{ $json.output.priority }}
+(Confirm exact field path in the node's output tab after Step 3.)
+
+=====================================================================
+STEP 5 — BUILD THE LOOKER STUDIO DASHBOARD  [PENDING]
+=====================================================================
+- lookerstudio.google.com -> Create -> Data source -> Google Sheets -> IM500_Maintenance_Log.
+- Suggested tiles: count of URGENT vs NORMAL; table of open requests; by-component chart.
+- Demo gotcha: Sheets data caches up to ~15 min. Pre-load a few rows so it looks rich,
+  then add one live during the demo and hit "Refresh data".
+
+BACKUP
+- Keep a screen recording of one clean end-to-end run (n8n still marked TESTING).
