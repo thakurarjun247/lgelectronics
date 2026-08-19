@@ -46,13 +46,41 @@ The **IM-500** is a plastic injection-molding machine on the Bay-3 line — it m
 
 ---
 
-## 4. Prerequisites (do once)
+## 4. Accounts & setup — from zero (do once)
 
-**4.1 Google account** — Personal Gmail or your own domain, not a locked corporate account. One login covers NotebookLM, Gemini and Google Sheets.
+> Complete these before the session. Screens change over time; if a button's wording differs, follow the on-screen prompt — the flow is always **create / sign in → verify → land on the home page**.
 
-**4.2 Free Gemini API key (for the agents)** — `aistudio.google.com` → **Get API key** → **Create API key** → copy it.
+### 4.1 A Google account
+- Use a personal Gmail or your own domain — **not** a locked corporate account (it may block Labs tools).
+- Don't have one to spare? `accounts.google.com` → **Create account** → follow the prompts.
+- This one login covers **NotebookLM, Google AI Studio (the Gemini key), and Google Sheets**.
 
-**4.3 Free n8n Cloud account (for the agents)** — `n8n.io` → start a free cloud trial → sign in. You land on your workflows home, where every agent lives.
+### 4.2 Google AI Studio — get the free Gemini API key
+1. Go to `aistudio.google.com` → **sign in** with your Google account.
+2. Accept the terms if prompted (first visit only).
+3. Click **Get API key** (top-right, or the "API keys" item in the left menu).
+4. Click **Create API key** → let it create the key in a new project (or pick an existing one).
+5. **Copy the key** and save it somewhere safe — you'll paste it into n8n. Treat it like a password.
+- The key draws on this Google account's free daily quota (see section 9). Keep the tab handy in case you need a second key.
+
+### 4.3 n8n Cloud — create the account
+1. Go to `n8n.io` → click **Get started** / **Start free trial**.
+2. Sign up with **email** (or **Continue with Google**). For email: enter email + password.
+3. **Verify your email** — open n8n's confirmation email and click the link.
+4. Finish the short onboarding (name + a couple of questions). If it asks for a *work* email and you only have personal, your own domain works; a personal Gmail is usually accepted on the trial.
+5. n8n provisions your **cloud instance** — you land on a URL like `https://<yourname>.app.n8n.cloud/`. This is your **workflows home**. Bookmark it.
+- The free trial is time-limited, so create the account within a few days of the session.
+
+### 4.4 NotebookLM — sign in
+1. Go to `notebooklm.google.com`.
+2. Click **Try NotebookLM** / **Sign in** → choose your Google account.
+3. Accept the terms on first use. You land on the notebooks home — **Create new** starts a notebook.
+- No install and no API key — it just uses your Google login.
+
+### 4.5 Google Sheets
+- Already covered by your Google login. When you reach section 10: `sheets.google.com` → **Blank spreadsheet**.
+
+**Quick checklist before the session:** Google account ready · Gemini API key copied & saved · n8n cloud URL bookmarked & logged in · NotebookLM opens to the home page · you can create a blank Google Sheet.
 
 ---
 
