@@ -1,7 +1,0 @@
-{
-  "name": "lg-ai-training-deck",
-  "version": "1.0.0",
-  "description": "Builds the LG Noida 4-hour AI training deck (self-contained, diagrams embedded as base64).",
-  "scripts": { "build": "node build-lg-training.js" },
-  "dependencies": { "pptxgenjs": "^3.12.0" }
-}
