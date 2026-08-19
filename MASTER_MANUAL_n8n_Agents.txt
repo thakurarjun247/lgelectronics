@@ -1,6 +1,6 @@
 ========================================================================
 LG NOIDA AI TRAINING — MASTER MANUAL
-Building AI Agents + Orchestration + Logging + Dashboard in n8n
+Building AI Agents + Orchestration + Logging in n8n
 (No-code, free-tier. Predictive Maintenance example, IM-500 machine.)
 ========================================================================
 n8n workflows home (KEY URL): https://arjunthakurdev.app.n8n.cloud/home/workflows
@@ -12,7 +12,7 @@ WHAT YOU WILL BUILD (the thread)
   2. Two more agents (spare parts, maintenance).
   3. All three joined into ONE workflow that hands off automatically (orchestration).
   4. The final decision written to a Google Sheet (the agent takes a real action).
-  5. A Looker Studio dashboard that visualizes the Sheet.
+  (Dashboard dropped from scope — the flow ends at the Google Sheet log.)
 
 The three agents:
   Agent A = Failure Prediction  (sensor reading -> predicted failure)
@@ -281,53 +281,12 @@ In the Google Sheets node, Values to Send (Map Each Column Manually):
 Test: run the pipeline -> a new row should appear in IM500_Maintenance_Log.
 
 ========================================================================
-PART 9 — DASHBOARD (INSIDE GOOGLE SHEETS)  [DONE]
+PART 9 — (DASHBOARD DROPPED FROM SCOPE)
 ========================================================================
-DECISION: build the dashboard as a TAB inside the same Google Sheet, NOT in Looker
-Studio. Reason: Sheets charts update INSTANTLY when a row is added (Looker Studio
-caches Sheet data up to ~15 min — wrong for a live demo), one less tool/login to break,
-and simpler to explain. (Looker Studio only wins if you need a shareable exec URL.)
-
-REQUIRED: Agent C's Priority must be a CLEAN value ("URGENT" or "NORMAL" only) and
-Part No must be the code only. Otherwise COUNTIF exact-match and the traffic-light
-formatting fail. (See PART 7.3 — put escalation notes in "summary", not "priority".)
-
-9.1 SEED THE LOG (optional, so the dashboard looks rich)
-- Paste the 12 seed rows (file: Module5_Dashboard/IM500_Maintenance_Dashboard.xlsx,
-  Sheet1 tab, rows 2-13) under the headers in your live Sheet1, starting at A2.
-- Component names in the seed match the bar chart exactly.
-
-9.2 IMPORT THE DASHBOARD TAB (into the SAME spreadsheet)
-- File: Module5_Dashboard/IM500_Dashboard_TAB_ONLY.xlsx (Dashboard tab only; its
-  formulas reference Sheet1).
-- In the live spreadsheet: File -> Import -> Upload -> that file ->
-  Import location = "Insert new sheet(s)" -> Import data.
-- A "Dashboard" tab appears, wired to Sheet1.
-- REQUIREMENT: the live data tab must be named exactly "Sheet1".
-
-9.3 WHAT THE DASHBOARD CONTAINS
-- KPI tiles: Total Requests / URGENT / NORMAL  (=COUNTA / =COUNTIF on Sheet1).
-- Pie: Requests by Priority.
-- Column chart: Failures by Component (EN-77 is the repeat offender).
-- All update live as new rows land (no refresh needed).
-
-9.4 TRAFFIC-LIGHT THE LOG (do once, on Sheet1)
-- Select column H (Priority) -> Format -> Conditional formatting ->
-  Text is exactly "URGENT" -> red ; add rule "NORMAL" -> green.
-
-9.5 IF A CHART DOESN'T RENDER AFTER IMPORT
-- Google usually converts the Excel pie/bar fine. If not, the helper tables are already
-  on the Dashboard tab (A7:B9 priority, D7:E14 component) -> select one -> Insert -> Chart.
-- KPIs and formulas always survive import.
-
-BUILD-YOUR-OWN (if not importing the file):
-1. New tab named "Dashboard".
-2. KPIs:  A1 "Total Requests" B1 =COUNTA(Sheet1!C2:C1000)
-          A2 "URGENT"         B2 =COUNTIF(Sheet1!H2:H1000,"URGENT")
-          A3 "NORMAL"         B3 =COUNTIF(Sheet1!H2:H1000,"NORMAL")
-3. Priority pie: helper D1 URGENT E1 =B2 ; D2 NORMAL E2 =B3 -> Insert -> Chart -> Pie.
-4. Component bar: Insert -> Pivot table (Sheet1!A1:H1000), Rows = Failing Component,
-   Values = COUNTA -> select pivot -> Insert -> Chart -> Column.
+The dashboard has been removed from the training. The flow ends when Agent C
+logs its decision to the Google Sheet (PART 6-8). Keeping the Sheet clean
+(clean Priority + component from Agent C, PART 7.3) is still worth it so the log
+is tidy and filterable, but there is no chart/dashboard to build.
 
 ========================================================================
 PART 10 — MASTER GOTCHAS LIST
@@ -350,5 +309,5 @@ PART 11 — LIVE DEMO ORDER (quick)
 1. Module 2 (RAG, NotebookLM): before vs after RAG on the EN-77 question.
 2. Module 3 (single agent): show Agent A predict, then the grounding refusal.
 3. Module 4 (orchestration): one servo question -> A->B->C -> URGENT maintenance request.
-4. Module 5 (log + dashboard): the row appears in the Sheet -> dashboard updates.
+4. Log: the row appears in the Google Sheet (the agent's real action). Flow ends here.
 Have the screen recording ready in case the live n8n instance hiccups.
