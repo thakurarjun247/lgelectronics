@@ -113,6 +113,26 @@ figure("MEET THE MACHINE","The IM-500 - what we'll work on","im500-context","Gro
 /* CONCEPTS */
 divider("01","SECTION 1","Concepts","The four words everyone mixes up - on the IM-500");
 figure("MODULE 1 · CONCEPTS","AI vs GenAI vs AI Agent vs Agentic AI","ai-concept-quadrant","Four levels, one machine.");
+// four terms, defined (cards)
+s=newSlide(DARK); kicker(s,"MODULE 1 · CONCEPTS",0.9,0.62);
+s.addText("The four terms, defined",{x:0.9,y:1.04,w:11.6,h:0.7,fontFace:SANS,fontSize:30,bold:true,color:WHITE});
+(function(){
+  const defs=[
+    {t:"AI",c:CYAN,b:["Software that follows rules or spots patterns","No language, no reasoning - just \"if this, then that\"","e.g. flag the part if vibration > 4.5"]},
+    {t:"Generative AI",c:GREEN,b:["Creates new content - text, summaries, images","Understands and writes language","Doesn't know YOUR data unless you give it (that's RAG)"]},
+    {t:"AI Agent",c:PURPLE,b:["An LLM that can decide and take an action","Uses your reference data (and tools) to finish a task","e.g. reads a sensor alarm -> names the failing part"]},
+    {t:"Agentic AI",c:AMBER,b:["Several agents working together toward a goal","They hand off, coordinate, span many steps","e.g. predict -> check parts -> raise maintenance"]},
+  ];
+  const cw=5.5,ch=2.15,gx=0.5,gy=0.35,x0=0.9,y0=2.05;
+  defs.forEach((d,i)=>{
+    const x=x0+(i%2)*(cw+gx), y=y0+Math.floor(i/2)*(ch+gy);
+    s.addShape(p.ShapeType.roundRect,{x,y,w:cw,h:ch,rectRadius:0.08,fill:{color:CARD},line:{color:d.c,width:1.5}});
+    s.addText(d.t,{x:x+0.22,y:y+0.12,w:cw-0.4,h:0.4,fontFace:SANS,fontSize:17,bold:true,color:d.c});
+    s.addText(bullets(d.b,6),{x:x+0.22,y:y+0.58,w:cw-0.44,h:ch-0.72,fontFace:SANS,fontSize:12.5,color:WHITE,valign:"top"});
+  });
+})();
+s.addNotes("Plain-word definitions of each term before the comparison table. Keep it quick - the next slide contrasts them side by side.");
+// comparison table
 s=newSlide(DARK); kicker(s,"MODULE 1 · CONCEPTS",0.9,0.62);
 s.addText("Four terms, side by side",{x:0.9,y:1.04,w:11.6,h:0.7,fontFace:SANS,fontSize:30,bold:true,color:WHITE});
 var th={fill:{color:TEAL},color:WHITE,bold:true,fontFace:SANS,fontSize:15,align:"center",valign:"middle"};
