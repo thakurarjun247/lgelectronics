@@ -165,6 +165,28 @@ Output: failing component, lead time, urgency.
 
 > Read the **chat bubble**, not the raw output panel — raw shows escaped `\n` and `*`, which is normal.
 
+> **Note on outputs:** these are AI-generated, so the exact wording and formatting vary slightly from run to run. The parts that matter — component, lead time, part number, priority — stay consistent. This applies to every agent below and to the orchestration.
+
+**Agent A — samples**
+
+Sample 1 (Warning):
+```
+INPUT:  Hydraulic pump vibration has been 3.9 mm/s across the last 4 shifts.
+
+OUTPUT: Failing component: Hydraulic pump bearing
+        Lead time: ~7 days
+        Urgency: Warning (predicted failure) - vibration is in the 2.8-4.5 band for 3+ shifts. Schedule before day 7.
+```
+
+Sample 2 (Critical):
+```
+INPUT:  Main motor current is reading 30 A.
+
+OUTPUT: Failing component: Drive motor / mechanical overload
+        Lead time: ~5 days
+        Urgency: Critical - 30 A is above the 28 A threshold. Immediate; schedule now, before day 5.
+```
+
 ### 7.2 Agent B — Spare Parts
 
 Same steps, new workflow. Reuse the same Gemini credential. Paste this system message:
@@ -185,6 +207,28 @@ Component -> Part No (stock / min / lead / status):
 
 Rules: stock < min -> reorder. If failure sooner than lead time -> URGENT/expedite. EN-77 always URGENT (21d lead vs ~6d failure), escalate to Bay-3 lead.
 Output: part no, stock, lead time, reorder/urgent decision.
+```
+
+**Agent B — samples**
+
+Sample 1 (in stock, normal):
+```
+INPUT:  Failing hydraulic pump bearing - what's the part and is it in stock?
+
+OUTPUT: Part: Bearing BR-3105
+        In stock: 4 (min 2) - above minimum, no reorder needed
+        Lead time: 5 days
+        Decision: OK - part available.
+```
+
+Sample 2 (out of stock, urgent):
+```
+INPUT:  Servo encoder EN-77, failure predicted in about 6 days.
+
+OUTPUT: Part: Servo encoder EN-77
+        In stock: 0 (min 1) - OUT
+        Lead time: 21 days (supplier OEM-Korea)
+        Decision: URGENT - 21-day lead exceeds the ~6-day failure. Expedite and escalate to the Bay-3 lead.
 ```
 
 ### 7.3 Agent C — Maintenance (with structured output)
@@ -228,6 +272,42 @@ Output these fields:
 
 > **Keep it clean:** `priority` must be exactly URGENT/NORMAL, `part` the code only, `component` from the fixed list — put notes in `summary`. Otherwise the logged sheet gets messy.
 
+**Agent C — samples** (Agent C receives Agent A + Agent B output; here we feed it directly to test it alone)
+
+Sample 1 (urgent):
+```
+INPUT:  Predicted failure: servo encoder EN-77 degrading, failure in ~6 days.
+        Part EN-77 is 0 in stock, 21-day supplier lead time.
+
+OUTPUT: {
+          "machine": "IM-500 (Bay 3)",
+          "component": "Servo Encoder EN-77",
+          "part": "EN-77",
+          "in_stock": 0,
+          "failure_days": 6,
+          "schedule_by_days": 6,
+          "priority": "URGENT",
+          "summary": "EN-77 out of stock; 21-day lead exceeds 6-day failure - schedule within 6 days and escalate to Bay-3 lead."
+        }
+```
+
+Sample 2 (normal):
+```
+INPUT:  Predicted failure: hydraulic pump bearing wear, failure in ~7 days.
+        Part BR-3105 is 4 in stock, 5-day lead time.
+
+OUTPUT: {
+          "machine": "IM-500 (Bay 3)",
+          "component": "Hydraulic Pump Bearing",
+          "part": "BR-3105",
+          "in_stock": 4,
+          "failure_days": 7,
+          "schedule_by_days": 6,
+          "priority": "NORMAL",
+          "summary": "BR-3105 in stock, 5-day lead covers the 7-day failure window - schedule within 7 days."
+        }
+```
+
 ---
 
 ## 8. Stage 3 — Orchestration (A → B → C)
@@ -258,6 +338,48 @@ Agent C:  Prompt = "Define below" (Expression):
 ![Orchestration patterns](Diagrams/orchestration-patterns.svg)
 
 **Test:** Open Chat → `Servo position error is now 140 counts and rising` → A predicts EN-77 → B flags 0 stock / 21-day lead → C raises an URGENT request, escalate.
+
+**Orchestration — samples** (one chat input flows A → B → C; the final answer is Agent C's)
+
+Sample 1 (urgent path):
+```
+INPUT:  Servo position error is now 140 counts and rising.
+
+FLOW:   A -> Servo Encoder EN-77, ~6 days (Critical)
+        B -> EN-77, 0 in stock, 21-day lead, URGENT
+        C (final) ->
+        {
+          "machine": "IM-500 (Bay 3)",
+          "component": "Servo Encoder EN-77",
+          "part": "EN-77",
+          "in_stock": 0,
+          "failure_days": 6,
+          "schedule_by_days": 6,
+          "priority": "URGENT",
+          "summary": "EN-77 out of stock; 21-day lead exceeds 6-day failure - schedule within 6 days, escalate to Bay-3 lead."
+        }
+```
+
+Sample 2 (normal path):
+```
+INPUT:  Hydraulic pump vibration has been 3.9 mm/s for the last 4 shifts.
+
+FLOW:   A -> Hydraulic Pump Bearing, ~7 days (Warning)
+        B -> BR-3105, 4 in stock, 5-day lead, OK
+        C (final) ->
+        {
+          "machine": "IM-500 (Bay 3)",
+          "component": "Hydraulic Pump Bearing",
+          "part": "BR-3105",
+          "in_stock": 4,
+          "failure_days": 7,
+          "schedule_by_days": 6,
+          "priority": "NORMAL",
+          "summary": "BR-3105 in stock, 5-day lead covers the 7-day window - schedule within 7 days."
+        }
+```
+
+Run Sample 1 vs Sample 2 back to back — URGENT vs NORMAL from the same pipeline proves the agents are reasoning, not scripted. Each of these also appends one row to the Google Sheet (section 10).
 
 ---
 
