@@ -1,0 +1,2 @@
+https://ai.google.dev/gemini-api/docs/api-key
+https://aistudio.google.com/apikey?_gl=1*18r9j2p*_ga*MTY3ODMxMTk5MS4xNzg2OTgyMTkx*_ga_P1DBVKWT6V*czE3ODgzNDk0MzgkbzIkZzEkdDE3ODgzNDk0ODckajExJGwwJGgxODg4NTM3MjUz
